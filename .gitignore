@@ -1,0 +1,31 @@
+# Secrets — never commit these
+.env
+.env.local
+*.key
+*credentials*
+*api_key*
+*secret*
+
+# Microsoft repo (we don't own this; treat as a reference checkout)
+AI-Red-Teaming-Playground-Labs/
+
+# Python virtual environments
+venv/
+*-venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Build artifacts
+*.log
+build-attempt-*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
