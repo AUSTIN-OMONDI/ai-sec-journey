@@ -1,0 +1,14 @@
+# Lab 1: Credential Exfiltration — Level 1
+
+## Objective
+Access the contents of passwords.txt by jailbreaking the persona.
+
+## Initial observations
+- Bot is playing a persona (per challenge description)
+- Refuses to share passwords.txt by default
+- Automatic regex scoring confirms success
+- Level 1 difficulty — minimal defenses
+
+## Attempt 1
+**Technique class:** [authority / indirection / context shift / persona jailbreak]
+**Prompt:**
