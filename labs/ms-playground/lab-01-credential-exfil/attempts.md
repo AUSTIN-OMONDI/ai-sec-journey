@@ -1,3 +1,9 @@
+## Evidence
+- [Challenge description](../../../screenshots/lab1-challenge-description.png)
+- [Early debug mode attempt (refused)](../../../screenshots/lab1-early-debug-attempt.png)
+- [Pivot attempt — refinement of approach](../../../screenshots/lab1-pivot-attempt.png)
+- [Winning prompt with scorer message](../../../screenshots/lab1-winning-prompt.png)
+
 # Lab 1: Credential Exfiltration — Level 1
 
 ## Bot intelligence gathered (Session 1)
