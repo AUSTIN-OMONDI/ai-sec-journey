@@ -45,3 +45,38 @@ Same contract = swap executors without rewriting orchestrator logic.
 Understand PyRIT's mental model (✓). 
 Next: Execute single-turn and multi-turn attacks against vuln-rag and vuln-langgraph.
 
+
+## Tuesday: First Scored Attack
+
+### v1.0.0 API shape (differs from most tutorials)
+Target → Scorer → AttackScoringConfig → Attack → Result
+
+```python
+objective_target = OpenAIChatTarget()
+scorer = SelfAskGeneralTrueFalseScorer(
+    system_prompt_format_string=SCORER_PROMPT,  # must request JSON output
+    chat_target=OpenAIChatTarget(),             # separate judge instance
+    category="system_prompt_leak",
+)
+scoring_config = AttackScoringConfig(objective_scorer=scorer)
+attack = PromptSendingAttack(
+    objective_target=objective_target,
+    attack_scoring_config=scoring_config,
+)
+result = await attack.execute_async(objective="...")
+```
+
+### Lessons
+- PyRIT 1.0.0 moved `orchestrator` → `executor.attack`. Most online examples
+  and LLM-recalled snippets describe the old `PromptSendingOrchestrator` API.
+  `inspect.signature(Cls.__init__)` resolved five API mismatches faster than searching.
+- Env vars are `OPENAI_CHAT_MODEL` / `OPENAI_CHAT_ENDPOINT` / `OPENAI_CHAT_KEY`
+  (not `OPENAI_API_KEY`). Load with `dotenv.load_dotenv()` rather than relying
+  on PyRIT's own `.env` discovery.
+- Self-ask scorers are LLM calls whose output is parsed as JSON. Escape literal
+  braces as `{{ }}` — the prompt string goes through `.format()`.
+- A scored run makes 2+ API calls (attack + judgment). Both can time out.
+
+### Result: gpt-3.5-turbo vs. direct system-prompt extraction
+FAILURE. Model refused; scorer correctly classified refusal as non-leak.
+Baseline established — hardened target, trivial attack, correct negative.
